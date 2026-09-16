@@ -1,0 +1,19 @@
+CREATE TABLE Readers (
+    id_reader SERIAL PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    phone VARCHAR(20)
+);
+CREATE TABLE Books (
+    isbn VARCHAR(20) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    publication_year INT CHECK (publication_year > 0 AND publication_year <= EXTRACT(YEAR FROM CURRENT_DATE))
+);
+CREATE TABLE Authors (
+    id_author SERIAL PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL
+);
+CREATE TABLE Book_Authors (
+    book_isbn VARCHAR(20) NOT NULL REFERENCES Books(isbn) ON DELETE CASCADE,
+    id_author INTEGER NOT NULL REFERENCES Authors(id_author) ON DELETE CASCADE,
+    PRIMARY KEY (book_isbn, id_author)
+);
