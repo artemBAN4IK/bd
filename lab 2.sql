@@ -84,49 +84,23 @@ INSERT INTO readers (full_name, phone) VALUES
 
 DELETE FROM readers
 WHERE full_name = 'Тестовый Читатель' 
-  AND reader_id NOT IN (SELECT DISTINCT reader_id FROM loans);
 
+SELECT * FROM Readers; --1
 
+SELECT title, publication_year FROM Books; --2
 
+SELECT title, publication_year FROM Books WHERE publication_year BETWEEN 1801 AND 1900 --3
 
+SELECT * FROM Books WHERE publication_year BETWEEN 1917 AND 1991 --4
 
----------------------------------------------------------ПРАКТИКА 7---------------------------------------------------------------------------
-INSERT INTO Readers (full_name, phone) VALUES
-('Анна Петрова', '+7-900-111-22-33'),
-('Иван Соколов', '+7-900-222-33-44'),
-('Мария Ким', '+7-900-333-44-55'),
-('Олег Васильев', '+7-900-444-55-66'),
-('Тестовый Читатель', '+7-900-555-66-77');
+SELECT * FROM Readers WHERE phone = '+7-900-999-88-77'; --5 
 
-INSERT INTO Books (isbn, title, publication_year) VALUES
-('978-5-17-118366-8', 'Мастер и Маргарита', 1967),
-('978-5-389-06256-6', 'Преступление и наказание', 1866),
-('978-5-04-116716-3', 'Война и мир', 1869),
-('978-5-699-12014-7', 'Золотой теленок', 1931),
-('978-5-389-03713-7', 'Пикник на обочине', 1972);
+SELECT * FROM Readers WHERE full_name LIKE '%ов'; --6
 
-INSERT INTO Authors (full_name) VALUES
-('Михаил Булгаков'),
-('Федор Достоевский'),
-('Лев Толстой'),
-('Илья Ильф'),
-('Евгений Петров'),
-('Аркадий Стругацкий'),
-('Борис Стругацкий');
+SELECT * FROM loans where actual_return_date IS NULL; --7
 
-INSERT INTO Book_Authors (book_isbn, author_id) VALUES
-('978-5-17-118366-8', (SELECT author_id FROM Authors WHERE full_name = 'Михаил Булгаков')),
-('978-5-389-06256-6', (SELECT author_id FROM Authors WHERE full_name = 'Федор Достоевский')),
-('978-5-04-116716-3', (SELECT author_id FROM Authors WHERE full_name = 'Лев Толстой')),
-('978-5-699-12014-7', (SELECT author_id FROM Authors WHERE full_name = 'Илья Ильф')),
-('978-5-699-12014-7', (SELECT author_id FROM Authors WHERE full_name = 'Евгений Петров')),
-('978-5-389-03713-7', (SELECT author_id FROM Authors WHERE full_name = 'Аркадий Стругацкий')),
-('978-5-389-03713-7', (SELECT author_id FROM Authors WHERE full_name = 'Борис Стругацкий'));
+SELECT title, publication_year FROM Books ORDER BY publication_year; --8
 
-INSERT INTO Loans (reader_id, book_isbn, issue_date, planned_return_date, actual_return_date) VALUES
-((SELECT reader_id FROM Readers WHERE full_name = 'Анна Петрова'), '978-5-17-118366-8', '2026-09-01', '2026-09-15', '2026-09-10'),
-((SELECT reader_id FROM Readers WHERE full_name = 'Иван Соколов'), '978-5-389-06256-6', '2026-09-03', '2026-09-17', NULL),
-((SELECT reader_id FROM Readers WHERE full_name = 'Мария Ким'), '978-5-04-116716-3', '2026-09-05', '2026-09-19', '2026-09-18'),
-((SELECT reader_id FROM Readers WHERE full_name = 'Олег Васильев'), '978-5-699-12014-7', '2026-09-07', '2026-09-21', NULL),
-((SELECT reader_id FROM Readers WHERE full_name = 'Анна Петрова'), '978-5-389-03713-7', '2026-09-09', '2026-09-23', NULL),
-((SELECT reader_id FROM Readers WHERE full_name = 'Мария Ким'), '978-5-699-12014-7', '2026-08-20', '2026-09-03', '2026-09-01');
+SELECT planned_return_date FROM loans ORDER BY planned_return_date; --9
+
+SELECT * FROM Books ORDER BY publication_year DESC LIMIT 3; --10
