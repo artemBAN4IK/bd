@@ -11,9 +11,11 @@ FROM customers AS c
 LEFT JOIN orders AS o ON c.customer_id = o.customer_id 
 GROUP BY c.customer_id, c.full_name;
 
-SELECT ROUND(AVG(order_total), 2) --4
-FROM ( SELECT order_id, SUM(quantity * price_per_unit)
-FROM Order_Items GROUP BY order_id ) AS order_totals;
+SELECT AVG(subtotal) --4
+FROM (
+    SELECT order_id, SUM(quantity * price_per_unit) AS subtotal
+    FROM Order_Items 
+    GROUP BY order_id) AS order_total;
 
 SELECT status, COUNT(*) --5
 FROM Orders GROUP BY status;
@@ -33,4 +35,4 @@ FROM Products AS p
 JOIN Order_Items AS oi ON p.product_id = oi.product_id
 GROUP BY p.product_id, p.product_name
 ORDER BY total_sold DESC
-LIMIT 1;
+LIMIT 2;
