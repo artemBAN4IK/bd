@@ -16,7 +16,7 @@ CREATE TABLE Project_Teams (
     FOREIGN KEY (member_id) REFERENCES members(member_id)
 );
 
-CREATE TABLE client (                ------------- 2
+CREATE TABLE client (              ------------ 2
     client_id INT PRIMARY KEY,
     client_name VARCHAR(255),
     client_email VARCHAR(255)
@@ -27,6 +27,11 @@ CREATE TABLE Equipment (
     equipment_name VARCHAR(255)
 );
 
-CREATE TABLE rental (
-    rental_date DATE
+CREATE TABLE EquipmentRentals (
+    client_id INT,
+    equipment_id INT,
+    rental_date DATE,
+    PRIMARY KEY (client_id, equipment_id),
+    FOREIGN KEY (client_id) REFERENCES Clients(client_id),
+    FOREIGN KEY (equipment_id) REFERENCES Equipment(equipment_id)
 );
